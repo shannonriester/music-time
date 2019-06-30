@@ -6,12 +6,12 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
-
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var serveStatic = require('serve-static');
 
 var SPOTIFY = require('../.private/private');
 var client_id = SPOTIFY.client_id; // Your client id
@@ -36,6 +36,8 @@ var generateRandomString = function(length) {
 var stateKey = 'spotify_auth_state';
 
 var app = express();
+app.use('/dist', express.static(__dirname + './dist'));
+
 app.use(express.static(__dirname + '/public'))
    .use(cors())
 	 .use(cookieParser());
